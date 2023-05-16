@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { saveComments } from '../actions';
+import requireAuth from './requireAuth';
 
 class CommentBox extends Component{
   constructor(){
@@ -22,6 +23,7 @@ class CommentBox extends Component{
 
   render(){
     const isSubmitDisabled = this.state.comment === '';
+    
     return <form onSubmit={this.handleSubmit}>
       <h2>Add comment</h2>
       <div>
@@ -36,16 +38,10 @@ class CommentBox extends Component{
   }
 };
 
-const mapStateToProps = (state) => {
-  return {
-    
-  }
-}
-
 const mapDispatchToProps = (dispatch) => {
   return {
     saveComments: data => dispatch(saveComments(data))
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CommentBox);
+export default connect(null, mapDispatchToProps)(requireAuth(CommentBox));

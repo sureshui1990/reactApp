@@ -1,15 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchComments } from '../actions';
-// import axios from 'axios';
 
 class CommentList extends Component{
-
-  // handleFetchComments = async () => {
-  //   const response  = await axios.get('http://jsonplaceholder.typicode.com/comments');
-  //   const comments = response.data.map(comment => comment.name).slice(0, 10);
-  //   this.props.fetchComments(comments);
-  // }
 
   listItem = () => {
     return this.props.comments && this.props.comments.map((item,index) => {
@@ -20,6 +13,7 @@ class CommentList extends Component{
   render() {
     return <div>
     <div>Comment List Component321</div>
+    <h3>Comment list</h3>
     <button type='button' id="fech-comments" onClick={this.props.fetchComments}>fetch comments</button>
     <ul>
       {this.listItem()}
