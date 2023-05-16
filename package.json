@@ -10,6 +10,7 @@
     "react": "16.3.2",
     "react-dom": "16.3.2",
     "react-redux": "5.0.7",
+    "react-router-dom": "^5.3.4",
     "react-scripts": "1.1.4",
     "redux": "4.0.0",
     "redux-logger": "^3.0.6",
@@ -23,7 +24,7 @@
     "eject": "react-scripts eject",
     "dev": "docker-compose -f docker-compose.dev.yml up -d"
   },
-  "type":"module",
+  "type": "module",
   "eslintConfig": {
     "extends": [
       "react-app",
@@ -41,5 +42,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "redux-devtools-extension": "^2.13.9"
   }
 }
