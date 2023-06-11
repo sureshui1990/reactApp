@@ -11,9 +11,11 @@ const getJWTToken = (user) => {
   );
   return token;
 };
+
 const signin = (req, res, next) => {
   res.send({ token: getJWTToken(req.user) });
 };
+
 const signup = (req, res, next) => {
   let { email, password } = req.body;
 
@@ -51,7 +53,16 @@ const signup = (req, res, next) => {
   });
 };
 
+
+const getUsers = (req, res, next) => {
+  User.find({}, (err, result) => {
+    if(err) {return {err}}
+    res.json({ data: result})
+  })
+}
+
 module.exports = {
   signup,
   signin,
+  getUsers
 };

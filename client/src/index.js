@@ -4,11 +4,25 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import "./index.css";
 import App from "./component/App";
 import Root from "./Root";
+import Welcome from './component/Welcome';
+import Feature from './component/Feature';
+import SignUp from "./component/SignUp";
+import SignIn from './component/SignIn';
+import SignOut from './component/SignOut';
+import MyDashboard from './component/Dashboard';
+// import 'bootstrap/dist/css/bootstrap.min.css';
 
 ReactDOM.render(
   <Root>
     <BrowserRouter>
-      <Route path="/" component={App} />
+      <App>
+        <Route path="/" exact component={Welcome} />
+        <Route path="/dashboard" component={MyDashboard} />
+        <Route path="/feature" component={Feature} />
+        <Route path="/signup" component={SignUp} />
+        <Route path="/signin" component={SignIn} />
+        <Route path="/signout" component={SignOut} />
+      </App>
     </BrowserRouter>
   </Root>,
   document.getElementById("root")

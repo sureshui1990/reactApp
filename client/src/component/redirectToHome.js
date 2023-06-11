@@ -12,8 +12,8 @@ export default (ChildComponent) => {
         }
 
         shouldNavigateAwayIfUserNotLoggedIn = () => {
-            if(!this.props.hasAuth){
-                this.props.history.push('/signin');
+            if(this.props.hasAuth){
+                this.props.history.push('/');
             }
         }
 

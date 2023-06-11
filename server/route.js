@@ -13,6 +13,8 @@ const route = (app) => {
   app.post("/signin", requireSignin, Authentication.signin);
 
   app.post("/signup", Authentication.signup);
+  
+  app.get("/users",requireAuth, Authentication.getUsers);
 };
 
 module.exports = route;

@@ -13,7 +13,7 @@ export default ({ children, initialState = [] }) => {
     <Provider
       store={createStore(
         Reducers,
-        { ...initialState },
+        { ...initialState, auth: { authenticated: localStorage.getItem('token')} },
         composeWithDevTools(applyMiddleware(thunk,async, reduxLogger))
       )}
     >

@@ -6,6 +6,8 @@ const morgan = require("morgan");
 const app = express();
 const route = require('./route');
 const mongoose = require('mongoose');
+const cors = require('cors');
+
 // env
 const url = "mongodb://127.0.0.1:27017";
 
@@ -21,6 +23,7 @@ mongoose.connect(`${url}/firstDB`, {
 
 // middleware
 app.use(morgan('combined'));
+app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json({ type: '*/*'}));
 route(app);
