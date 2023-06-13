@@ -15,6 +15,7 @@ const route = (app) => {
   app.post("/signup", Authentication.signup);
   
   app.get("/users",requireAuth, Authentication.getUsers);
+  app.get("/user/:id", Authentication.getUserProfile);
 };
 
 module.exports = route;

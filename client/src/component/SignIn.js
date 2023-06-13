@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { compose } from "redux";
 import { signIn } from "../actions/index";
 import redirectToHome from "./redirectToHome";
-import { FieldInput, GridLayOut } from './CustomFormFields';
+import { FieldInput, GridLayOut, MainLayout } from './CustomFormFields';
 
 class SignIn extends Component {
   onSubmit = (propsFromForm) => {
@@ -22,9 +22,9 @@ class SignIn extends Component {
     }
   }
   render() {
-    console.log(this.props);
     const { handleSubmit, pristine, submitting, authError } = this.props;
     return (
+      <MainLayout>
       <GridLayOut>
         <h2>SignIn</h2>
         <form onSubmit={handleSubmit(this.onSubmit)}>
@@ -54,6 +54,7 @@ class SignIn extends Component {
           </div>
         </form>
       </GridLayOut>
+      </MainLayout>
     );
   }
 }

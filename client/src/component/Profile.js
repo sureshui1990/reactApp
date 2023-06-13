@@ -1,30 +1,38 @@
 import React, { Component } from "react";
 import { Field, reduxForm } from "redux-form";
-import { Button, Alert, ButtonToolbar } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import { connect } from "react-redux";
 import { compose } from "redux";
-import { signUp } from "../actions/index";
-import redirectToHome from "./redirectToHome";
+import { updateProfile,getUserProfile } from "../actions/index";
 import { FieldInput, GridLayOut, MainLayout } from "./CustomFormFields";
 
-class Signup extends Component {
-  onSubmit = (propsFromForm) => {
-    const { handleSignup } = this.props;
-    const requesBody = { ...propsFromForm };
-    handleSignup(requesBody);
-    // reset();
-  };
-  componentDidUpdate() {
-    if (this.props.hasAuth) {
-      this.props.history.push("/feature");
+class Profile extends Component {
+  constructor(){
+    super();
+    this.state = {
+      firstName:'',
+      lastName:''
     }
   }
+  onSubmit = (propsFromForm) => {
+    const { handleSignIn } = this.props;
+    const requesBody = {
+      firstName: propsFromForm.firstName,
+      lastName: propsFromForm.lastName,
+    };
+    // handleSignIn(requesBody);
+  };
+
+  componentDidMount(){
+    // this.props.hanldeGetUserProfile(this.props.currentUserId);
+  }
+
   render() {
-    const { handleSubmit, pristine, reset, submitting, authError } = this.props;
+    const { handleSubmit, pristine, submitting,initialValues } = this.props;
     return (
       <MainLayout>
         <GridLayOut>
-          <h2>SignUp</h2>
+          <h2>Profile Update</h2>
           <form onSubmit={handleSubmit(this.onSubmit)}>
             <Field
               name="firstName"
@@ -40,22 +48,7 @@ class Signup extends Component {
               placeholder="Last Name"
               autoComplete="off"
             />
-            <Field
-              name="email"
-              component={FieldInput}
-              type="text"
-              placeholder="Username"
-              autoComplete="off"
-            />
-            <Field
-              name="password"
-              component={FieldInput}
-              type="password"
-              placeholder="Password"
-              autoComplete="off"
-            />
-            {authError && <Alert bsStyle="danger">{authError}</Alert>}
-            <ButtonToolbar>
+            <div>
               <Button
                 type="submit"
                 disabled={pristine || submitting}
@@ -63,15 +56,7 @@ class Signup extends Component {
               >
                 Submit
               </Button>
-              <Button
-                type="button"
-                disabled={pristine || submitting}
-                onClick={reset}
-                bsStyle="danger"
-              >
-                Reset
-              </Button>
-            </ButtonToolbar>
+            </div>
           </form>
         </GridLayOut>
       </MainLayout>
@@ -83,21 +68,25 @@ const mapStateToProps = (state) => {
   return {
     authError: state.auth.error,
     hasAuth: state.auth.authenticated,
+    currentUserId: state.auth.currentUserId,
+    initialValues: state.auth.user
   };
 };
 const mapDispathToProps = (dispatch) => {
   return {
-    handleSignup: (data) => dispatch(signUp(data)),
+    hanldeGetUserProfile: (userId) => dispatch(getUserProfile(userId)),
+    handleUpdateProfile: (data) => dispatch(updateProfile(data))
   };
 };
 
 const PreloadConnect = connect(
   mapStateToProps,
   mapDispathToProps
-)(redirectToHome(Signup));
+)(Profile);
 
 export default compose(
   reduxForm({
-    form: "signup",
+    form: "profileUpdate",
+    enableReinitialize: true
   })
 )(PreloadConnect);

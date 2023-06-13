@@ -13,11 +13,18 @@ const getJWTToken = (user) => {
 };
 
 const signin = (req, res, next) => {
-  res.send({ token: getJWTToken(req.user) });
+  console.log('ee',req)
+  // res.send({ token: getJWTToken(req.user),user:req.user });
+  User.findOne( { "email": req.body.email}, (err, result) => {
+    if(err) {return {err}}
+    const { email,id } = result;
+    const token = getJWTToken({email,id});
+    res.json({ token, user: result });
+  })
 };
 
 const signup = (req, res, next) => {
-  let { email, password } = req.body;
+  let { email, password,firstName,lastName } = req.body;
 
   if (!email || !password) {
     res.status(422);
@@ -41,6 +48,7 @@ const signup = (req, res, next) => {
     const user = new User({
       email,
       password: hashPassword,
+      firstName,lastName
     });
 
     // Save the new user with information
@@ -48,7 +56,11 @@ const signup = (req, res, next) => {
       if (err) {
         return next(err);
       }
-      res.json({ token: getJWTToken(user) });
+      const responseData = {
+        token: getJWTToken(user),
+        user
+      }
+      res.json(responseData);
     });
   });
 };
@@ -59,10 +71,18 @@ const getUsers = (req, res, next) => {
     if(err) {return {err}}
     res.json({ data: result})
   })
-}
+};
+
+const getUserProfile = (req, res, next) => {
+  User.findById( req.params.id, (err, result) => {
+    if(err) {return {err}}
+    res.json({ data: result})
+  })
+};
 
 module.exports = {
   signup,
   signin,
-  getUsers
+  getUsers,
+  getUserProfile
 };

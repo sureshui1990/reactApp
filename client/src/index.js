@@ -10,6 +10,7 @@ import SignUp from "./component/SignUp";
 import SignIn from './component/SignIn';
 import SignOut from './component/SignOut';
 import MyDashboard from './component/Dashboard';
+import Profile from './component/Profile';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 
 ReactDOM.render(
@@ -18,6 +19,7 @@ ReactDOM.render(
       <App>
         <Route path="/" exact component={Welcome} />
         <Route path="/dashboard" component={MyDashboard} />
+        <Route path="/profile" component={Profile} />
         <Route path="/feature" component={Feature} />
         <Route path="/signup" component={SignUp} />
         <Route path="/signin" component={SignIn} />

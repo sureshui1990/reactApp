@@ -1,6 +1,12 @@
 import React from "react";
 import { Grid, Row, Col,FormGroup ,FormControl } from "react-bootstrap";
 
+export const MainLayout =({children}) => {
+  return <main>
+    {children}
+  </main>
+};
+
 export const GridLayOut = ({ children }) => {
   return (
     <div>

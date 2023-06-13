@@ -1,9 +1,10 @@
 import React from 'react';
 import requireAuth from './requireAuth';
+import { MainLayout } from './CustomFormFields';
 
 const Feature = () => {
-    return <div>
+    return <MainLayout>
         <h2>Feature</h2>
-    </div>
+    </MainLayout>
 }
 export default requireAuth(Feature);

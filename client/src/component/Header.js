@@ -1,21 +1,32 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { Navbar, NavItem, NavDropdown, Nav, MenuItem } from "react-bootstrap";
+import { Navbar, NavItem, NavDropdown, Nav, MenuItem,Button } from "react-bootstrap";
 import { connect } from "react-redux";
-
+import { signOut } from "../actions/index";
 class Header extends Component {
+  handleSignOut = () => {
+    this.props.handleSignOut();
+    localStorage.clear();
+  };
   renderLinks = () => {
     if (this.props.hasAuth) {
       return (
         <React.Fragment>
-          <NavItem href="/dashboard">
+          <NavItem componentClass={Link} href="/dashboard" to="/dashboard">
             Dashboard
           </NavItem>
+
           <NavDropdown title="-" id="basic-nav-dropdown">
-            <MenuItem>Profile</MenuItem>
-            <MenuItem>Setting</MenuItem>
+            <MenuItem componentClass={Link} href="/profile" to="/profile">
+              Profile
+            </MenuItem>
             <MenuItem divider />
-            <MenuItem href="/signout">
+            <MenuItem
+              componentClass={Button}
+              href="/signout"
+              to="/signout"
+              onClick={this.handleSignOut}
+            >
               Logout
             </MenuItem>
           </NavDropdown>
@@ -24,13 +35,13 @@ class Header extends Component {
     } else {
       return (
         <React.Fragment>
-          <NavItem href="/feature">
+          <NavItem componentClass={Link} href="/feature" to="/feature">
             Feature
           </NavItem>
-          <NavItem href="/signin">
+          <NavItem componentClass={Link} href="/signin" to="/signin">
             SignIn
           </NavItem>
-          <NavItem href="/signup">
+          <NavItem componentClass={Link} href="/signup" to="/signup">
             SignUp
           </NavItem>
         </React.Fragment>
@@ -40,16 +51,17 @@ class Header extends Component {
 
   render() {
     return (
-      <div>
+      <header>
         <Navbar>
           <Navbar.Header>
             <Navbar.Brand>
               <Link to="/">Home</Link>
             </Navbar.Brand>
           </Navbar.Header>
+
           <Nav>{this.renderLinks()}</Nav>
         </Navbar>
-      </div>
+      </header>
     );
   }
 }
@@ -59,5 +71,9 @@ const mapStateToProps = (state) => {
     hasAuth: state.auth.authendicated || localStorage.getItem("token"),
   };
 };
-
-export default connect(mapStateToProps, null)(Header);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    handleSignOut: () => dispatch(signOut),
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

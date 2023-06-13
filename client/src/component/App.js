@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Header from "./Header";
 import { Grid } from 'react-bootstrap';
-
+import './App.css';
 class App extends Component {
   render() {
     const { children } = this.props;
@@ -10,6 +10,9 @@ class App extends Component {
         <Grid>
           <Header />
           {children}
+          <footer>
+            2023@copy Rights
+          </footer>
         </Grid>
       </div>
     );

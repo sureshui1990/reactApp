@@ -1,8 +1,10 @@
 import React from 'react';
 
+import { MainLayout } from './CustomFormFields';
+
 const Welcome = () => {
-    return <div>
+    return <MainLayout>
         <h2>Welcome to our application</h2>
-    </div>
+    </MainLayout>
 }
 export default Welcome;

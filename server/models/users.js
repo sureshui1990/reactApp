@@ -5,6 +5,8 @@ const Schema = mongoose.Schema;
 const userSchema = new Schema({
   email: { type: String, lowercase: true, unique: true },
   password: { type: String },
+  firstName: {type: String},
+  lastName: {type: String},
 });
 
 // create class

@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import requireAuth from "./requireAuth";
 import { ListGroup, ListGroupItem } from "react-bootstrap";
 import { getUsers } from "../actions/index";
+import { MainLayout } from './CustomFormFields';
 
 const User = ({ email }) => {
   return (
@@ -13,13 +14,15 @@ const User = ({ email }) => {
 };
 
 class Dashboard extends Component {
+  
   componentDidMount() {
-    this.props.handleGetUsers();
+    const isUserListNotAvailable = this.props.availableUsers && this.props.availableUsers.length === 0;
+    isUserListNotAvailable && this.props.handleGetUsers();
   }
   render() {
     const { availableUsers = [] } = this.props;
     return (
-      <div>
+      <MainLayout>
         <h2>Dashboard</h2>
 
         <h3>User list</h3>
@@ -33,7 +36,7 @@ class Dashboard extends Component {
               );
             })}
         </ListGroup>
-      </div>
+      </MainLayout>
     );
   }
 }
