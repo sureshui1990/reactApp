@@ -8,5 +8,6 @@ export default combineReducers({
     comments: commentsReducer,
     auth: authReducer,
     form: reduxFormReducer,
+    user: {},
     users: usersReducer
 })

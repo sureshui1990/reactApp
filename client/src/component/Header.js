@@ -3,6 +3,9 @@ import { Link } from "react-router-dom";
 import { Navbar, NavItem, NavDropdown, Nav, MenuItem,Button } from "react-bootstrap";
 import { connect } from "react-redux";
 import { signOut } from "../actions/index";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 class Header extends Component {
   handleSignOut = () => {
     this.props.handleSignOut();
@@ -61,6 +64,7 @@ class Header extends Component {
 
           <Nav>{this.renderLinks()}</Nav>
         </Navbar>
+        <ToastContainer />
       </header>
     );
   }
@@ -73,7 +77,7 @@ const mapStateToProps = (state) => {
 };
 const mapDispatchToProps = (dispatch) => {
   return {
-    handleSignOut: () => dispatch(signOut),
+    handleSignOut: () => dispatch(()=>signOut(dispatch)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

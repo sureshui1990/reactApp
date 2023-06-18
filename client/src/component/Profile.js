@@ -2,33 +2,24 @@ import React, { Component } from "react";
 import { Field, reduxForm } from "redux-form";
 import { Button } from "react-bootstrap";
 import { connect } from "react-redux";
-import { compose } from "redux";
-import { updateProfile,getUserProfile } from "../actions/index";
+import { updateProfile } from "../actions/index";
 import { FieldInput, GridLayOut, MainLayout } from "./CustomFormFields";
+import requireAuth from './requireAuth';
 
 class Profile extends Component {
-  constructor(){
-    super();
-    this.state = {
-      firstName:'',
-      lastName:''
-    }
-  }
+  
   onSubmit = (propsFromForm) => {
-    const { handleSignIn } = this.props;
-    const requesBody = {
+    const { updateProfile } = this.props;
+    const updatingFields = {
       firstName: propsFromForm.firstName,
       lastName: propsFromForm.lastName,
+      email:propsFromForm.email
     };
-    // handleSignIn(requesBody);
+    updateProfile(updatingFields);
   };
 
-  componentDidMount(){
-    // this.props.hanldeGetUserProfile(this.props.currentUserId);
-  }
-
   render() {
-    const { handleSubmit, pristine, submitting,initialValues } = this.props;
+    const { handleSubmit, pristine, submitting } = this.props;
     return (
       <MainLayout>
         <GridLayOut>
@@ -48,6 +39,14 @@ class Profile extends Component {
               placeholder="Last Name"
               autoComplete="off"
             />
+            <Field
+              name="email"
+              component={FieldInput}
+              type="text"
+              placeholder="Email id"
+              autoComplete="off"
+              disabled
+            />
             <div>
               <Button
                 type="submit"
@@ -66,27 +65,19 @@ class Profile extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    authError: state.auth.error,
     hasAuth: state.auth.authenticated,
-    currentUserId: state.auth.currentUserId,
-    initialValues: state.auth.user
+    initialValues: state.auth.user || JSON.parse(localStorage.getItem('user')) || {},
   };
 };
 const mapDispathToProps = (dispatch) => {
   return {
-    hanldeGetUserProfile: (userId) => dispatch(getUserProfile(userId)),
-    handleUpdateProfile: (data) => dispatch(updateProfile(data))
+    updateProfile: (data) => dispatch(()=> updateProfile(dispatch, data)),
   };
 };
 
-const PreloadConnect = connect(
-  mapStateToProps,
-  mapDispathToProps
-)(Profile);
+const connectReduxForm = reduxForm({
+  form: "profileUpdate",
+  enableReinitialize: true,
+})(requireAuth(Profile));
 
-export default compose(
-  reduxForm({
-    form: "profileUpdate",
-    enableReinitialize: true
-  })
-)(PreloadConnect);
+export default connect(mapStateToProps, mapDispathToProps)(connectReduxForm);

@@ -16,9 +16,12 @@ const User = ({ email }) => {
 class Dashboard extends Component {
   
   componentDidMount() {
-    const isUserListNotAvailable = this.props.availableUsers && this.props.availableUsers.length === 0;
+    const { hasAuth,availableUsers } = this.props;
+    const isUserListNotAvailable = hasAuth && availableUsers && availableUsers.length === 0;
     isUserListNotAvailable && this.props.handleGetUsers();
   }
+
+  
   render() {
     const { availableUsers = [] } = this.props;
     return (
@@ -44,11 +47,13 @@ class Dashboard extends Component {
 const mapStateToProps = (state) => {
   return {
     availableUsers: state.users.data,
+    successMessage: state.auth.success,
+    hasAuth: state.auth.authenticated || localStorage.getItem('token') || false
   };
 };
 const mapDispatchToProps = (dispatch) => {
   return {
-    handleGetUsers: (users) => dispatch(getUsers(users)),
+    handleGetUsers: () => dispatch(() => getUsers(dispatch))
   };
 };
 

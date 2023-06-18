@@ -11,7 +11,6 @@ import SignIn from './component/SignIn';
 import SignOut from './component/SignOut';
 import MyDashboard from './component/Dashboard';
 import Profile from './component/Profile';
-// import 'bootstrap/dist/css/bootstrap.min.css';
 
 ReactDOM.render(
   <Root>

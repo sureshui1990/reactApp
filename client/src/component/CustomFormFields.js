@@ -21,7 +21,7 @@ export const GridLayOut = ({ children }) => {
   );
 };
 
-export const FieldInput = ({ type, input, placeholder, autoComplete }) => {
+export const FieldInput = ({ type, input, placeholder, autoComplete, disabled }) => {
   return (
     <FormGroup>
     <FormControl
@@ -30,6 +30,7 @@ export const FieldInput = ({ type, input, placeholder, autoComplete }) => {
       value={input.value}
       onChange={input.onChange}
       autoComplete={autoComplete}
+      disabled={disabled}
     />
     </FormGroup>
   );

@@ -1,10 +1,20 @@
-import { CHANGE_AUTH, AUTH_USER, AUTH_ERROR, SIGN_OUT } from "../actions/types";
+import {
+  CHANGE_AUTH,
+  AUTH_USER,
+  AUTH_ERROR,
+  SIGN_OUT,
+  UPDATE_PROFILE,
+} from "../actions/types";
 
 const initialState = {
+  isLoading: false,
+  loaded: false,
+  data: null,
+  error: null,
   isLoggedIn: false,
   authenticated: "",
-  error: "",
-  user: {}
+  user: {},
+  success: "",
 };
 
 export default (state = initialState, action) => {
@@ -13,14 +23,30 @@ export default (state = initialState, action) => {
       return { ...state, isLoggedIn: action.payload };
 
     case AUTH_USER: {
-      const { token, user }= action.payload;
-      return { ...state, authenticated: token, user };
+      const { token, user, success, message } = action.payload;
+      return {
+        ...state,
+        isLoggedIn: success || false,
+        authenticated: token,
+        user,
+        success: message,
+      };
     }
     case SIGN_OUT: {
-      return {...state, authenticated: action.payload,error: ''}
+      return {
+        ...state,
+        isLoggedIn: false,
+        authenticated: action.payload,
+        error: "",
+        success: ""
+      };
     }
     case AUTH_ERROR: {
       return { ...state, error: action.payload };
+    }
+
+    case UPDATE_PROFILE: {
+      return { ...state, user: action.payload };
     }
 
     default:

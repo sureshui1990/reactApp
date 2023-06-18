@@ -12,7 +12,6 @@ class Signup extends Component {
     const { handleSignup } = this.props;
     const requesBody = { ...propsFromForm };
     handleSignup(requesBody);
-    // reset();
   };
   componentDidUpdate() {
     if (this.props.hasAuth) {

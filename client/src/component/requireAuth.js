@@ -24,7 +24,7 @@ export default (ChildComponent) => {
 
     const mapStateToProps = state => {
         return {
-            hasAuth: state.auth.authenticated
+            hasAuth: state.auth.authenticated || localStorage.getItem('token') || false
         }
     }
     return connect(mapStateToProps, null)(ComposedComponent);

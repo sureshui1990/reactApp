@@ -28,7 +28,6 @@ describe('About fetchComment action test', () => {
     it('action type test', done => {
         const action = fetchComments();
         moxios.wait(() => {
-            console.log('suresh', action);
             expect(FETCH_COMMENTS).toEqual(FETCH_COMMENTS);
             done();
         });

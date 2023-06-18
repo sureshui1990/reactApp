@@ -1,6 +1,6 @@
 
 export default ({ dispatch }) => next => action => {
-
+    
     // Check the action contain promise
     // Allow the action if does not exist promise
     // Handling the action with promise 
@@ -9,8 +9,9 @@ export default ({ dispatch }) => next => action => {
             const newAction = {...actionWithPayload};
             return dispatch(newAction);
         })
-    } else {
-        return next(action);
+    } else if(Object.keys(action).length === 0){
+        return null;
     }
+    return next(action);
 
 }

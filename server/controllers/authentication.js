@@ -13,13 +13,15 @@ const getJWTToken = (user) => {
 };
 
 const signin = (req, res, next) => {
-  console.log('ee',req)
-  // res.send({ token: getJWTToken(req.user),user:req.user });
+  const responseData = {
+    success: true,
+    message: 'SignIn Successfully'
+  }
   User.findOne( { "email": req.body.email}, (err, result) => {
     if(err) {return {err}}
     const { email,id } = result;
     const token = getJWTToken({email,id});
-    res.json({ token, user: result });
+    res.json({ token, user: result,...responseData });
   })
 };
 
@@ -28,7 +30,7 @@ const signup = (req, res, next) => {
 
   if (!email || !password) {
     res.status(422);
-    res.send({ error: "Please provide email and password" });
+    res.send({ code: 422, error: "Please provide email and password" });
     return res.end();
   }
 
@@ -38,7 +40,7 @@ const signup = (req, res, next) => {
     }
     if (userExist) {
       res.status(422);
-      res.send({ error: "User exist", alert: "Please use login" });
+      res.send({ code:422, error: "User exist", alert: "Please use login" });
       return res.end();
     }
 
@@ -58,7 +60,8 @@ const signup = (req, res, next) => {
       }
       const responseData = {
         token: getJWTToken(user),
-        user
+        user,
+        success:true
       }
       res.json(responseData);
     });
@@ -69,20 +72,34 @@ const signup = (req, res, next) => {
 const getUsers = (req, res, next) => {
   User.find({}, (err, result) => {
     if(err) {return {err}}
-    res.json({ data: result})
+    res.json({ success: true, data: result})
   })
 };
 
-const getUserProfile = (req, res, next) => {
+const getUserProfile = (req, res) => {
   User.findById( req.params.id, (err, result) => {
     if(err) {return {err}}
-    res.json({ data: result})
+    res.json({ success: true, data: result})
   })
 };
+
+const updateUserProfile = (req, res) => {
+  const updatingFields = {
+    firstName: req.body.firstName,
+    lastName: req.body.lastName
+  }
+  User.findOneAndUpdate( { "email": req.body.email}, {$set: updatingFields}, {new: true}, (err, result) => {
+    if(err) {return {err}}
+    res.json({ data: result });
+  })
+};
+
+
 
 module.exports = {
   signup,
   signin,
   getUsers,
-  getUserProfile
+  getUserProfile,
+  updateUserProfile
 };

@@ -2,11 +2,9 @@ import React from "react";
 import { createStore, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
 import Reducers from "./reducers";
-// import reduxPromise from "redux-promise";
 import reduxLogger from "redux-logger";
-import thunk from "redux-thunk";
+import thunk from 'redux-thunk';
 import { composeWithDevTools } from "redux-devtools-extension";
-import async from "./middleware/async";
 
 const getProfileWhileRefresh = () => {
   const isUserLogged = !!localStorage.getItem('token');
@@ -23,9 +21,9 @@ export default ({ children, initialState = [] }) => {
         Reducers,
         {
           ...initialState,
-          auth: getProfileWhileRefresh(),
+          user: getProfileWhileRefresh()
         },
-        composeWithDevTools(applyMiddleware(thunk, async, reduxLogger))
+        composeWithDevTools(applyMiddleware(thunk, reduxLogger))
       )}
     >
       {children}

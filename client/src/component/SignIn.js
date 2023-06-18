@@ -6,7 +6,6 @@ import { compose } from "redux";
 import { signIn } from "../actions/index";
 import redirectToHome from "./redirectToHome";
 import { FieldInput, GridLayOut, MainLayout } from './CustomFormFields';
-
 class SignIn extends Component {
   onSubmit = (propsFromForm) => {
     const { handleSignIn } = this.props;
@@ -16,11 +15,13 @@ class SignIn extends Component {
     }
     handleSignIn(requesBody);
   };
+
   componentDidUpdate() {
     if(this.props.hasAuth) {
       this.props.history.push('/feature');
     }
-  }
+  };
+
   render() {
     const { handleSubmit, pristine, submitting, authError } = this.props;
     return (
@@ -67,7 +68,7 @@ const mapStateToProps = (state) => {
 };
 const mapDispathToProps = (dispatch) => {
   return {
-    handleSignIn: (data) => dispatch(signIn(data)),
+    handleSignIn: (data) => dispatch(()=>signIn(dispatch,data))
   };
 };
 
